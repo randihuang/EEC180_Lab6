@@ -50,7 +50,7 @@ always @(posedge clk) begin
     end
 end
 
-always @(posedge clk) begin
+always @(*) begin
     case (state)
         IDLE: begin
             writeEnable_hist = 0;
