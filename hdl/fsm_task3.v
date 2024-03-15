@@ -12,6 +12,7 @@ module fsm_controller(
 localparam IDLE = 2'b00;
 localparam COMPUTE = 2'b01;
 localparam WRITE = 2'b10;
+localparam CLEAR = 2'b11;
 
 integer ct;
 
@@ -26,7 +27,6 @@ reg [5:0] counter_bins, next_counter_bins;
 
 /// Ghetto janky and I hate this
 reg [5:0] compute_1, compute_2, compute_3, compute_4;
-
 wire [5:0] compute_1_next, compute_2_next, compute_3_next, compute_4_next;
 
 integer j;
@@ -90,7 +90,7 @@ always @(*) begin
             pixel_address = next_pixel_address + 1;
             if(row == (dim >> 2)-1) begin
                 next_row = 0;
-                if(col == dim-1) begin
+                if(col == dim) begin
                     next_col = 0;
                     next_state = WRITE;
                     writeEnable_hist = 1;
@@ -110,10 +110,10 @@ always @(*) begin
             datain_hist = hist_data[counter_bins];
             if(counter_bins < hist_bins) begin
                 hist_adress_next = addr_hist + 1;
+                hist_data[counter_bins] = 0;
             end else begin
                 start = 1;
                 next_state = IDLE;
-                hist_data[counter_bins] = 0;
             end
             next_counter_bins = counter_bins + 1;
         end
