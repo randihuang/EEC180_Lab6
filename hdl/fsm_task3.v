@@ -24,6 +24,11 @@ reg [13:0] hist_data [63:0];
 wire [5:0] compute_outputs [3:0];
 reg [5:0] counter_bins, next_counter_bins;
 
+/// Ghetto janky and I hate this
+reg [5:0] compute_1, compute_2, compute_3, compute_4;
+
+wire [5:0] compute_1_next, compute_2_next, compute_3_next, compute_4_next;
+
 integer j;
 
 initial begin
@@ -47,6 +52,10 @@ always @(posedge clk) begin
         col <= next_col;
         next_pixel_address <= pixel_address;
         counter_bins <= next_counter_bins;
+        compute_1 <= compute_1_next;
+        compute_2 <= compute_2_next;
+        compute_3 <= compute_3_next;
+        compute_4 <= compute_4_next;
     end
 end
 
@@ -65,16 +74,18 @@ always @(*) begin
             enable_compute = 0;
             if(ready) begin
                 next_state = COMPUTE;
+                enable_compute = 1;
             end else begin
                 next_state = IDLE;
             end
         end
         COMPUTE: begin
-            enable_compute = 1;
             // collect computer  
-            for(j = 0; j < 4; j = j + 1) begin
-                hist_data[compute_outputs[j]] = hist_data[compute_outputs[j]] + 1;
-            end
+            
+            hist_data[compute_1] = hist_data[compute_1] + 1;
+            hist_data[compute_2] = hist_data[compute_2] + 1;
+            hist_data[compute_3] = hist_data[compute_3] + 1;
+            hist_data[compute_4] = hist_data[compute_4] + 1;
             // put counter
             pixel_address = next_pixel_address + 1;
             if(row == (dim >> 2)-1) begin
@@ -111,19 +122,37 @@ always @(*) begin
     endcase 
 end
 
-
-genvar i;
-generate
-    for(i = 0; i < 4; i = i + 1) begin
-        hist_compute goku(
+hist_compute goku1(
             .enable(enable_compute),
             .reset(rst),
             .clk(clk),
-            .pixel(pixel_data[(8*(i+1)-1): 8*i]),
+            .pixel(pixel_data[7:0]),
             .pix_address(pixel_address),
-            .hist_bin(compute_outputs[i])
-        );
-    end
-endgenerate
+            .hist_bin(compute_1_next)
+);
+hist_compute goku2(
+            .enable(enable_compute),
+            .reset(rst),
+            .clk(clk),
+            .pixel(pixel_data[15:8]),
+            .pix_address(pixel_address),
+            .hist_bin(compute_2_next)
+);
+hist_compute goku3(
+            .enable(enable_compute),
+            .reset(rst),
+            .clk(clk),
+            .pixel(pixel_data[23:16]),
+            .pix_address(pixel_address),
+            .hist_bin(compute_3_next)
+); 
+hist_compute goku4(
+            .enable(enable_compute),
+            .reset(rst),
+            .clk(clk),
+            .pixel(pixel_data[31:24]),
+            .pix_address(pixel_address),
+            .hist_bin(compute_4_next)
+);
 
 endmodule;
