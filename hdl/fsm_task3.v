@@ -32,7 +32,7 @@ wire [5:0] compute_1_next, compute_2_next, compute_3_next, compute_4_next;
 integer j;
 
 initial begin
-    for (ct = 0; ct < 897; ct = ct + 1) begin
+    for (ct = 0; ct < 64; ct = ct + 1) begin
         hist_data[ct] <= 14'b0; 
     end
 end
@@ -42,9 +42,6 @@ always @(posedge clk) begin
         state <= IDLE;
         row <= 0;
         col <= 0;
-        for(j = 0; j < 64; j = j + 1) begin
-            hist_data[j] = 14'b0;
-        end
     end else begin 
         addr_hist <= hist_adress_next;
         state <= next_state;
@@ -64,7 +61,6 @@ always @(*) begin
         IDLE: begin
             writeEnable_hist = 0;
             start = 0;
-            addr_hist = 0;
             next_col = 0;
             next_row = 0;
             datain_hist = 0;
@@ -155,4 +151,4 @@ hist_compute goku4(
             .hist_bin(compute_4_next)
 );
 
-endmodule;
+endmodule

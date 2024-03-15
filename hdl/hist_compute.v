@@ -11,4 +11,4 @@ always@(pixel) begin
     end 
 end
 
-endmodule;
+endmodule

@@ -1,0 +1,16 @@
+Analysis & Synthesis Status : Successful - Fri Mar 15 01:46:23 2024
+Quartus Prime Version : 19.1.0 Build 670 09/22/2019 SJ Lite Edition
+Revision Name : taskIII
+Top-level Entity Name : taskIII
+Family : MAX 10
+Total logic elements : 4,431
+    Total combinational functions : 4,072
+    Dedicated logic registers : 934
+Total registers : 934
+Total pins : 73
+Total virtual pins : 0
+Total memory bits : 526,848
+Embedded Multiplier 9-bit elements : 0
+Total PLLs : 0
+UFM blocks : 0
+ADC blocks : 0
