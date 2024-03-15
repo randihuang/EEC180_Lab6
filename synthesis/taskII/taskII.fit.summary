@@ -1,0 +1,18 @@
+Fitter Status : Successful - Tue Mar 12 17:06:49 2024
+Quartus Prime Version : 19.1.0 Build 670 09/22/2019 SJ Lite Edition
+Revision Name : taskII
+Top-level Entity Name : taskII
+Family : MAX 10
+Device : 10M50DAF484C7G
+Timing Models : Final
+Total logic elements : 1,903 / 49,760 ( 4 % )
+    Total combinational functions : 1,603 / 49,760 ( 3 % )
+    Dedicated logic registers : 992 / 49,760 ( 2 % )
+Total registers : 992
+Total pins : 73 / 360 ( 20 % )
+Total virtual pins : 0
+Total memory bits : 526,848 / 1,677,312 ( 31 % )
+Embedded Multiplier 9-bit elements : 0 / 288 ( 0 % )
+Total PLLs : 0 / 4 ( 0 % )
+UFM blocks : 0 / 1 ( 0 % )
+ADC blocks : 0 / 2 ( 0 % )
